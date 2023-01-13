@@ -122,3 +122,55 @@ class DataObjectModel(object):
             raise TypeError("`type(y_index)` not in [int, tuple].")
 
         return x_, y_
+
+
+class CreateSequence(DataObjectModel):
+    """
+    Create a Data Sequence Typically to be used in LSTM Model
+
+    LSTM Model, or rather any time series data, requires a specific
+    sequence of data consisting of `n_lookback` i.e. length of input
+    sequence (or lookup values) and `n_forecast` values, i.e., the
+    length of output sequence. The function tries to provide single
+    approach to break data into sequence of `x_train` and `y_train`
+    for training in neural network.
+    """
+
+    def __init__(self, data: np.ndarray) -> None:
+        super().__init__(data)
+
+
+    def create_univariate_series(
+        self,
+        n_lookback : int,
+        n_forecast : int
+    ) -> tuple:
+        """
+        Create a Sequence of `x_train` and `y_train` for training a
+        neural network model with time series data. The basic
+        approach in building the function is taken from:
+        https://stackoverflow.com/a/69912334/6623589
+        """
+
+        x_, y_ = [], []
+        n_record = self.__check_univariate_get_len__() \
+            - n_forecast + 1
+
+        for idx in range(n_lookback, n_record):
+            x_.append(self.data[idx - n_lookback : idx])
+            y_.append(self.data[idx : idx + n_forecast])
+
+        x_, y_ = map(np.array, [x_, y_])
+        return map(lambda arr : arr.reshape(*arr.shape, 1), [x_, y_])
+
+
+    def __check_univariate_get_len__(self) -> int:
+        """
+        Check if the data is a univariate one, and if `True` then
+        return the length, i.e. `.shape[0]`, for further analysis.
+        """
+
+        if self.data.ndim != 1:
+            raise TypeError("Wrong dimension for univariate series.")
+
+        return self.data.shape[0]
