@@ -15,3 +15,6 @@
 # 🚧❓ TODO Setup CI/CD Pipelines for `.ipynb` File, such that No Cell is Frozen
 *.py     @ZenithClown
 *.ipynb  @ZenithClown
+
+# Managerial Role: All types of documents are now controlled by `docs-admin`
+*.md @nxlogics-docs
