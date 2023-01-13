@@ -8,7 +8,7 @@
 # The owners specified below are the default owner of any/all the
 # files available under the repository, unless so specified by the order
 # of precendence (if found later).
-* @nxlogics @neuralNOD
+* @nxlogics
 
 # I also want validation rules to be setup for `.py` and `.ipynb` files
 # 🚧 TODO Setup Moderators A/C for Specific Tasks - Managerial Role(s)
