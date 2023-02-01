@@ -48,8 +48,9 @@ class BareLSTM(object):
             ),
 
             # the network consits of only one single hidden layer
-            LSTM(units[1], activation = self.activation, name = "HL-1"),
-            Dropout(dropout, name = "HL-D1"),
+            LSTM(units[1], activation = self.activation, recurrent_dropout = dropout, name = "HL-1"),
+            # Dense(int(self.output_shape * 2), name = "HL-2"),
+            # Dropout(dropout, name = "HL-2-D"),
 
             Dense(self.output_shape, name = "oLayer")
         ], name = self.model_name)
