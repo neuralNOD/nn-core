@@ -29,7 +29,12 @@ def lineplot_1d(x : np.ndarray, **kwargs) -> object:
 
     plt.xlabel(kwargs.get("xlabel", "$x \longrightarrow$"))
     plt.ylabel(kwargs.get("ylabel", "$y \longrightarrow$"))
-    plt.xticks(range(len(xticks_)), xticks_, size = "small", rotation = 90)
+    
+    if xticks_:
+        # pass `None` to hide xticks
+        plt.xticks(range(len(xticks_)), xticks_, size = "small", rotation = 90)
+    else:
+        plt.xticks([]) # no xticks
 
     plt.legend()
     plt.title(kwargs.get("title", "1D Line Plot"))
